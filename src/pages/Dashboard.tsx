@@ -1,12 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import MapComponent from "@/components/Map";
-import QuickStatsPanel from "@/components/QuickStatsPanel";
-import AlertsPanel from "@/components/AlertsPanel";
-import LayerControls from "@/components/LayerControls";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import OverviewTab from "@/components/tabs/OverviewTab";
+import HeatAirQualityTab from "@/components/tabs/HeatAirQualityTab";
+import WaterSoilTab from "@/components/tabs/WaterSoilTab";
+import LandUseTab from "@/components/tabs/LandUseTab";
+import GreenspaceTab from "@/components/tabs/GreenspaceTab";
 import type { CityData } from "@/pages/Landing";
 
 export interface LayerState {
@@ -72,43 +74,39 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Sidebar - Stats */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-3 space-y-6"
-          >
-            <QuickStatsPanel city={city} />
-          </motion.div>
+        <Tabs defaultValue="overview" className="w-full">
+          <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-5 mb-6">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="heat">Heat & Air</TabsTrigger>
+            <TabsTrigger value="water">Water & Soil</TabsTrigger>
+            <TabsTrigger value="land">Land Use</TabsTrigger>
+            <TabsTrigger value="greenspace">Greenspace</TabsTrigger>
+          </TabsList>
 
-          {/* Center - Map */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="lg:col-span-6"
-          >
-            <div className="glass-card p-4 h-[600px] relative">
-              <LayerControls
-                activeLayers={activeLayers}
-                onLayerToggle={handleLayerToggle}
-              />
-              <MapComponent city={city} activeLayers={activeLayers} />
-            </div>
-          </motion.div>
+          <TabsContent value="overview">
+            <OverviewTab 
+              city={city} 
+              activeLayers={activeLayers} 
+              onLayerToggle={handleLayerToggle} 
+            />
+          </TabsContent>
 
-          {/* Right Sidebar - Alerts */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="lg:col-span-3"
-          >
-            <AlertsPanel city={city} />
-          </motion.div>
-        </div>
+          <TabsContent value="heat">
+            <HeatAirQualityTab city={city} />
+          </TabsContent>
+
+          <TabsContent value="water">
+            <WaterSoilTab city={city} />
+          </TabsContent>
+
+          <TabsContent value="land">
+            <LandUseTab city={city} />
+          </TabsContent>
+
+          <TabsContent value="greenspace">
+            <GreenspaceTab city={city} />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
