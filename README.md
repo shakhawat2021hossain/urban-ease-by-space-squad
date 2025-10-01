@@ -1,73 +1,52 @@
-# Welcome to your Lovable project
+# 🌍 Urban Ease – Sustainable City Insights Dashboard  
 
-## Project info
+Urban Ease is an interactive web-based dashboard built for the **NASA Space Apps Challenge**.  
+It empowers users, urban planners, and researchers to explore environmental and urban sustainability data of cities using **NASA Earthdata APIs** and open data sources.  
 
-**URL**: https://lovable.dev/projects/096f7dea-ef80-4657-99e6-006dbb451e24
+The platform helps users visualize and analyze metrics like **air quality, vegetation health, water quality, and temperature trends** to make informed decisions for building healthier, sustainable cities.  
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Live: https://urban-ease-by-space-squad.vercel.app/
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/096f7dea-ef80-4657-99e6-006dbb451e24) and start prompting.
+## 🚀 Features  
 
-Changes made via Lovable will be committed automatically to this repo.
+✅ **City Search & Insights** – Search any city and explore its environmental indicators.  
+✅ **Air Quality, Temperature, Vegetation & Water Quality** – Real-time data visualizations.  
+✅ **Historical Trends** – Interactive timeline slider with trend charts (2000–2025).  
+✅ **WHO Threshold Analysis** – Compare city metrics against WHO guidelines.  
+✅ **Report Submission** – Citizens can submit sustainability issues via a modal form.  
+✅ **Powered by NASA Earth Data** – Direct links to NASA resources for deeper exploration.  
+✅ **Responsive UI** – Built with **React + Tailwind + Shadcn UI** for a clean, modern design.  
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Tech Stack  
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**Frontend**  
+- ⚛️ React (with TypeScript)  
+- 🎨 Tailwind CSS + Shadcn UI  
+- 📊 Recharts (data visualizations)  
+- 🎭 Framer Motion (animations)  
 
-Follow these steps:
+**Backend & Data**  
+- 🌐 NASA Earthdata APIs  
+- 🗺️ OpenStreetMap (for city geocoding)  
+- 🛰️ Environmental & sustainability datasets  
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📂 Project Structure  
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/096f7dea-ef80-4657-99e6-006dbb451e24) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+urban-ease/
+│── src/
+│   ├── app/             # Next.js App Router (if used)
+│   ├── components/      # UI components (Search, Cards, Charts, Modal)
+│   ├── pages/           # Landing & Dashboard pages
+│   ├── lib/             # Utility functions & API helpers
+│── public/              # Static assets (logo, images)
+│── package.json         # Dependencies
+│── README.md            # Project documentation
