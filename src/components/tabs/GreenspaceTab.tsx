@@ -10,6 +10,7 @@ interface GreenspaceTabProps {
 }
 
 const GreenspaceTab = ({ city }: GreenspaceTabProps) => {
+  console.log(city);
   const accessibilityData = [
     { district: "North", access: 85, color: "hsl(var(--secondary))" },
     { district: "South", access: 72, color: "hsl(var(--secondary))" },

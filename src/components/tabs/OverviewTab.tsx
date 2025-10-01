@@ -19,12 +19,33 @@ const OverviewTab = ({ city, activeLayers, onLayerToggle }: OverviewTabProps) =>
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2 }}
-        className="lg:col-span-3 space-y-6"
+        className="lg:col-span-3"
       >
         <QuickStatsPanel city={city} />
+      </motion.div>
+
+      {/* Center - Map and Time Slider */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3 }}
+        className="lg:col-span-9 space-y-4"
+      >
+        <div className="glass-card p-4 h-[600px] relative">
+          <LayerControls
+            activeLayers={activeLayers}
+            onLayerToggle={onLayerToggle}
+          />
+          <MapComponent city={city} activeLayers={activeLayers} />
+        </div>
         
         {/* Time Slider Card */}
-        <div className="glass-card p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="glass-card p-4"
+        >
           <h3 className="font-semibold text-lg mb-4 text-foreground">Historical Data</h3>
           <div className="space-y-2">
             <label className="text-sm text-muted-foreground">Year Range</label>
@@ -40,23 +61,7 @@ const OverviewTab = ({ city, activeLayers, onLayerToggle }: OverviewTabProps) =>
               <span>2025</span>
             </div>
           </div>
-        </div>
-      </motion.div>
-
-      {/* Center - Map */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        className="lg:col-span-9"
-      >
-        <div className="glass-card p-4 h-[600px] relative">
-          <LayerControls
-            activeLayers={activeLayers}
-            onLayerToggle={onLayerToggle}
-          />
-          <MapComponent city={city} activeLayers={activeLayers} />
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );

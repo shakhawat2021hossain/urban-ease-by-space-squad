@@ -20,12 +20,8 @@ const Landing = () => {
 
   const handleCitySelect = (city: CityData) => {
     setSelectedCity(city);
-  };
-
-  const handleGoToDashboard = () => {
-    if (selectedCity) {
-      navigate("/dashboard", { state: { city: selectedCity } });
-    }
+    // Navigate directly to dashboard when city is selected
+    navigate("/dashboard", { state: { city: city } });
   };
 
   const features = [
@@ -84,23 +80,6 @@ const Landing = () => {
           >
             <CitySearch onCitySelect={handleCitySelect} />
           </motion.div>
-
-          {selectedCity && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Button
-                onClick={handleGoToDashboard}
-                variant="gradient"
-                size="lg"
-                className="text-lg px-8 py-6 rounded-xl"
-              >
-                Go to Dashboard →
-              </Button>
-            </motion.div>
-          )}
         </motion.div>
 
         {/* Features Grid */}

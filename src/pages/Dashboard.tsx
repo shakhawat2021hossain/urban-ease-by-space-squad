@@ -1,7 +1,16 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { 
+  ArrowLeft, 
+  LayoutDashboard, 
+  Thermometer, 
+  Droplets, 
+  Building2, 
+  Trees,
+  FileDown,
+  History 
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import OverviewTab from "@/components/tabs/OverviewTab";
@@ -9,6 +18,8 @@ import HeatAirQualityTab from "@/components/tabs/HeatAirQualityTab";
 import WaterSoilTab from "@/components/tabs/WaterSoilTab";
 import LandUseTab from "@/components/tabs/LandUseTab";
 import GreenspaceTab from "@/components/tabs/GreenspaceTab";
+import DataDownloadTab from "@/components/tabs/DataDownloadTab";
+import HistoricalTab from "@/components/tabs/HistoricalTab";
 import type { CityData } from "@/pages/Landing";
 
 export interface LayerState {
@@ -75,12 +86,35 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-6">
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-5 mb-6">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="heat">Heat & Air</TabsTrigger>
-            <TabsTrigger value="water">Water & Soil</TabsTrigger>
-            <TabsTrigger value="land">Land Use</TabsTrigger>
-            <TabsTrigger value="greenspace">Greenspace</TabsTrigger>
+          <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-7 mb-6">
+            <TabsTrigger value="overview" className="flex items-center gap-2">
+              <LayoutDashboard className="w-4 h-4" />
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="heat" className="flex items-center gap-2">
+              <Thermometer className="w-4 h-4" />
+              Heat & Air
+            </TabsTrigger>
+            <TabsTrigger value="water" className="flex items-center gap-2">
+              <Droplets className="w-4 h-4" />
+              Water & Soil
+            </TabsTrigger>
+            <TabsTrigger value="land" className="flex items-center gap-2">
+              <Building2 className="w-4 h-4" />
+              Land Use
+            </TabsTrigger>
+            <TabsTrigger value="greenspace" className="flex items-center gap-2">
+              <Trees className="w-4 h-4" />
+              Greenspace
+            </TabsTrigger>
+            <TabsTrigger value="historical" className="flex items-center gap-2">
+              <History className="w-4 h-4" />
+              Historical
+            </TabsTrigger>
+            <TabsTrigger value="download" className="flex items-center gap-2">
+              <FileDown className="w-4 h-4" />
+              Download
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -105,6 +139,14 @@ const Dashboard = () => {
 
           <TabsContent value="greenspace">
             <GreenspaceTab city={city} />
+          </TabsContent>
+
+          <TabsContent value="historical">
+            <HistoricalTab city={city} />
+          </TabsContent>
+
+          <TabsContent value="download">
+            <DataDownloadTab city={city} />
           </TabsContent>
         </Tabs>
       </div>
