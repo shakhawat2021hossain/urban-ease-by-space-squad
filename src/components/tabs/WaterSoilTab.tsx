@@ -12,6 +12,7 @@ interface WaterSoilTabProps {
 }
 
 const WaterSoilTab = ({ city }: WaterSoilTabProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [riverData, setRiverData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +21,7 @@ const WaterSoilTab = ({ city }: WaterSoilTabProps) => {
       try {
         const endDate = new Date().toISOString().split('T')[0];
         const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-        
+
         const response = await axios.get(
           `https://flood-api.open-meteo.com/v1/flood?latitude=${city.latitude}&longitude=${city.longitude}&daily=river_discharge&start_date=${startDate}&end_date=${endDate}`
         );
@@ -109,12 +110,13 @@ const WaterSoilTab = ({ city }: WaterSoilTabProps) => {
         </Card>
       </motion.div>
 
-      {/* Right - Charts */}
+      {/* Right - Charts + Image */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="lg:col-span-2 space-y-6"
       >
+        {/* River Discharge Chart */}
         <Card className="glass-card">
           <CardHeader>
             <CardTitle>River Discharge (30 Days)</CardTitle>
@@ -144,27 +146,40 @@ const WaterSoilTab = ({ city }: WaterSoilTabProps) => {
           </CardContent>
         </Card>
 
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle>Industrial Sites & Wastewater</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-alert/5 rounded-lg">
-                <span className="text-sm">Monitored industrial sites</span>
-                <Badge variant="secondary">24 locations</Badge>
+        {/* Industrial Sites + Image */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Industrial Sites Card */}
+          <Card className="glass-card flex-1">
+            <CardHeader>
+              <CardTitle>Industrial Sites & Wastewater</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center p-3 bg-alert/5 rounded-lg">
+                  <span className="text-sm">Monitored industrial sites</span>
+                  <Badge variant="secondary">24 locations</Badge>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-secondary/5 rounded-lg">
+                  <span className="text-sm">Wastewater treatment plants</span>
+                  <Badge>8 facilities</Badge>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-accent/5 rounded-lg">
+                  <span className="text-sm">Water quality violations</span>
+                  <Badge variant="destructive">2 this month</Badge>
+                </div>
               </div>
-              <div className="flex justify-between items-center p-3 bg-secondary/5 rounded-lg">
-                <span className="text-sm">Wastewater treatment plants</span>
-                <Badge>8 facilities</Badge>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-accent/5 rounded-lg">
-                <span className="text-sm">Water quality violations</span>
-                <Badge variant="destructive">2 this month</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          {/* Image */}
+          <div className="flex-1 flex items-center justify-center">
+            <img
+              src="https://i.ibb.co.com/FbW23rxY/72ff8822-75b2-4404-81eb-f9ce4576b747.jpg"
+              alt="Water & Soil Visualization"
+              className="w-full h-auto max-h-[400px] object-contain"
+            />
+          </div>
+        </div>
       </motion.div>
     </div>
   );

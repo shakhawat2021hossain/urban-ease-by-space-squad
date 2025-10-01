@@ -12,6 +12,7 @@ interface HeatAirQualityTabProps {
 }
 
 const HeatAirQualityTab = ({ city }: HeatAirQualityTabProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [airQualityData, setAirQualityData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -121,6 +122,7 @@ const HeatAirQualityTab = ({ city }: HeatAirQualityTabProps) => {
         animate={{ opacity: 1, scale: 1 }}
         className="lg:col-span-2 space-y-6"
       >
+        {/* PM2.5 & PM10 Trends */}
         <Card className="glass-card">
           <CardHeader>
             <CardTitle>PM2.5 & PM10 Trends (24h)</CardTitle>
@@ -151,27 +153,40 @@ const HeatAirQualityTab = ({ city }: HeatAirQualityTabProps) => {
           </CardContent>
         </Card>
 
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle>WHO Threshold Exceedances</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-alert/5 rounded-lg">
-                <span className="text-sm">Days exceeding PM2.5 limit</span>
-                <Badge variant="destructive">15 days</Badge>
+        {/* WHO Threshold + Image */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* WHO Threshold Card */}
+          <Card className="glass-card flex-1">
+            <CardHeader>
+              <CardTitle>WHO Threshold Exceedances</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center p-3 bg-alert/5 rounded-lg">
+                  <span className="text-sm">Days exceeding PM2.5 limit</span>
+                  <Badge variant="destructive">15 days</Badge>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-secondary/5 rounded-lg">
+                  <span className="text-sm">Days exceeding PM10 limit</span>
+                  <Badge variant="secondary">8 days</Badge>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-accent/5 rounded-lg">
+                  <span className="text-sm">Ozone alerts</span>
+                  <Badge>3 days</Badge>
+                </div>
               </div>
-              <div className="flex justify-between items-center p-3 bg-secondary/5 rounded-lg">
-                <span className="text-sm">Days exceeding PM10 limit</span>
-                <Badge variant="secondary">8 days</Badge>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-accent/5 rounded-lg">
-                <span className="text-sm">Ozone alerts</span>
-                <Badge>3 days</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          {/* Image */}
+          <div className="flex-1 flex items-center justify-center">
+            <img
+              src="https://i.ibb.co.com/3HKMbKk/8f1478b8-1f46-4c3c-9686-b520950f6e60.jpg" // replace with your imgbb link
+              alt="WHO Visualization"
+              className="w-full h-auto max-h-[400px] object-contain"
+            />
+          </div>
+        </div>
       </motion.div>
     </div>
   );

@@ -1,15 +1,15 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  ArrowLeft, 
-  LayoutDashboard, 
-  Thermometer, 
-  Droplets, 
-  Building2, 
+import {
+  ArrowLeft,
+  LayoutDashboard,
+  Thermometer,
+  Droplets,
+  Building2,
   Trees,
   FileDown,
-  History 
+  History
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -76,9 +76,18 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-            <div className="gradient-earth px-6 py-2 rounded-full">
-              <span className="text-white font-semibold">Urban Ease</span>
+
+            {/* profile icon */}
+            {/* profile icon with name */}
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium text-foreground">Raihan Samee</span>
+              <img
+                src="https://randomuser.me/api/portraits/men/75.jpg" // real-time male photo
+                alt="User Profile"
+                className="w-10 h-10 rounded-full object-cover border border-border/20"
+              />
             </div>
+
           </div>
         </div>
       </motion.header>
@@ -118,10 +127,10 @@ const Dashboard = () => {
           </TabsList>
 
           <TabsContent value="overview">
-            <OverviewTab 
-              city={city} 
-              activeLayers={activeLayers} 
-              onLayerToggle={handleLayerToggle} 
+            <OverviewTab
+              city={city}
+              activeLayers={activeLayers}
+              onLayerToggle={handleLayerToggle}
             />
           </TabsContent>
 

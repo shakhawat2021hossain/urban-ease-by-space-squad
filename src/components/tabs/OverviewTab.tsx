@@ -32,10 +32,10 @@ const OverviewTab = ({ city, activeLayers, onLayerToggle }: OverviewTabProps) =>
         className="lg:col-span-9 space-y-4"
       >
         <div className="glass-card p-4 h-[600px] relative">
-          <LayerControls
+          {/* <LayerControls
             activeLayers={activeLayers}
             onLayerToggle={onLayerToggle}
-          />
+          /> */}
           <MapComponent city={city} activeLayers={activeLayers} />
         </div>
         

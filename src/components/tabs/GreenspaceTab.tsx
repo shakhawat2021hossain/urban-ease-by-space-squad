@@ -90,12 +90,13 @@ const GreenspaceTab = ({ city }: GreenspaceTabProps) => {
         </Card>
       </motion.div>
 
-      {/* Right - Charts */}
+      {/* Right - Charts + Image */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="lg:col-span-2 space-y-6"
       >
+        {/* Greenspace Access Bar Chart */}
         <Card className="glass-card">
           <CardHeader>
             <CardTitle>Greenspace Access by District (15-min walk)</CardTitle>
@@ -119,31 +120,44 @@ const GreenspaceTab = ({ city }: GreenspaceTabProps) => {
           </CardContent>
         </Card>
 
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle>Ecosystem Services Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-secondary/5 rounded-lg">
-                <span className="text-sm">Carbon sequestration</span>
-                <Badge variant="secondary">$2.5M/year</Badge>
+        {/* Ecosystem Services + Image */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Ecosystem Services Card */}
+          <Card className="glass-card flex-1">
+            <CardHeader>
+              <CardTitle>Ecosystem Services Value</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center p-3 bg-secondary/5 rounded-lg">
+                  <span className="text-sm">Carbon sequestration</span>
+                  <Badge variant="secondary">$2.5M/year</Badge>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-accent/5 rounded-lg">
+                  <span className="text-sm">Air quality improvement</span>
+                  <Badge>$1.8M/year</Badge>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-secondary/5 rounded-lg">
+                  <span className="text-sm">Stormwater management</span>
+                  <Badge variant="secondary">$3.2M/year</Badge>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-accent/5 rounded-lg">
+                  <span className="text-sm">Recreation & health benefits</span>
+                  <Badge>$5.1M/year</Badge>
+                </div>
               </div>
-              <div className="flex justify-between items-center p-3 bg-accent/5 rounded-lg">
-                <span className="text-sm">Air quality improvement</span>
-                <Badge>$1.8M/year</Badge>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-secondary/5 rounded-lg">
-                <span className="text-sm">Stormwater management</span>
-                <Badge variant="secondary">$3.2M/year</Badge>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-accent/5 rounded-lg">
-                <span className="text-sm">Recreation & health benefits</span>
-                <Badge>$5.1M/year</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          {/* Image */}
+          <div className="flex-1 flex items-center justify-center">
+            <img
+              src="https://i.ibb.co.com/8L2XnSCZ/277d804a-d792-4e2e-861a-f7538155ccae.jpg"
+              alt="Greenspace Visualization"
+              className="w-full h-auto max-h-[400px] object-contain"
+            />
+          </div>
+        </div>
       </motion.div>
     </div>
   );
