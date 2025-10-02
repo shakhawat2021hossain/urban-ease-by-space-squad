@@ -113,9 +113,15 @@ urban-ease/
 
 ---
 
+## Figma Design Prototype
+
+🔗 [View On Figma](https://www.figma.com/proto/9XMx5o3sHCqraZvsnxllG7/Community-app?node-id=58-1547&p=f&t=y1Lo5Poc74zpsusg-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=12%3A12) 
+
+---
+
 ## 👩‍🚀 Team – Space Squad
 
-- A.M. SAADNAN TAHSIN (Team Lead)
+- A.M. Saadnan Tahsin (Team Lead)
 - Najmus Shakif Ayaan (Data Analyst)
 - Sania Shahriar (Researcher)
 - Sadia Mubashira (UI/UX Designer)
