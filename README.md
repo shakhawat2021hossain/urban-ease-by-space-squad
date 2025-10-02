@@ -58,4 +58,9 @@ urban-ease/
 
 <img width="1639" height="547" alt="Screenshot 2025-10-01 191605" src="https://github.com/user-attachments/assets/29bd47e1-e31b-4dfd-8010-b87c0116c27b" />
 
+----
+
+## Figma Design
+https://www.figma.com/proto/9XMx5o3sHCqraZvsnxllG7/Community-app?node-id=58-1547&p=f&t=y1Lo5Poc74zpsusg-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=12%3A12
+
 
