@@ -88,6 +88,42 @@ urban-ease/
 
 ---
 
+
+## 📌 Future Improvements  
+
+- 🔐 **Authentication for report submission**  
+- 🗺️ **Interactive Map view for reports** (Leaflet/Mapbox)  
+- 📊 **More climate & urban planning metrics**  
+- ☁️ **Backend integration with MongoDB/Postgres**  
+
+---
+
+## ❤️ Acknowledgements  
+
+- 🌍 [NASA Earth Data](https://earthdata.nasa.gov/)  
+- 🌤️ [Open-Meteo](https://open-meteo.com/)  
+- 🗺️ [OpenStreetMap / Nominatim](https://nominatim.openstreetmap.org/)  
+- 📊 [Recharts](https://recharts.org/)  
+- 🎨 [Shadcn/UI](https://ui.shadcn.com/)
+
+---
+
+## n8n Work Flow for community Engagement
+<img width="1639" height="547" alt="Screenshot 2025-10-01 191605" src="https://github.com/user-attachments/assets/f36f09f5-ca10-407a-bcc4-72dcccc1eadb" />
+
+---
+
+## 👩‍🚀 Team – Space Squad
+
+- A.M. SAADNAN TAHSIN (Team Lead)
+- Najmus Shakif Ayaan (Data Analyst)
+- Sania Shahriar (Researcher)
+- Sadia Mubashira (UI/UX Designer)
+- Mohammad Raihan Samee (AI Expert)
+- Shakhawat Hossain (Web Developer)
+
+--- 
+
 ## 🖥️ Local Setup
 
 Follow these steps to set up the project locally:
@@ -105,23 +141,4 @@ bun install
 ```bash
 bun run dev
 ```
-
----
-
-## 📌 Future Improvements  
-
-- 🔐 **Authentication for report submission**  
-- 🗺️ **Interactive Map view for reports** (Leaflet/Mapbox)  
-- 📊 **More climate & urban planning metrics**  
-- ☁️ **Backend integration with MongoDB/Postgres**  
-
----
-
-## ❤️ Acknowledgements  
-
-- 🌍 [NASA Earth Data](https://earthdata.nasa.gov/)  
-- 🌤️ [Open-Meteo](https://open-meteo.com/)  
-- 🗺️ [OpenStreetMap / Nominatim](https://nominatim.openstreetmap.org/)  
-- 📊 [Recharts](https://recharts.org/)  
-- 🎨 [Shadcn/UI](https://ui.shadcn.com/)  
 
