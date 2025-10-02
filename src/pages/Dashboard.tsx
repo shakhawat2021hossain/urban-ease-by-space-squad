@@ -82,7 +82,7 @@ const Dashboard = () => {
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium text-foreground">Raihan Samee</span>
               <img
-                src="https://randomuser.me/api/portraits/men/75.jpg" // real-time male photo
+                src="https://randomuser.me/api/portraits/men/7.jpg" // real-time male photo
                 alt="User Profile"
                 className="w-10 h-10 rounded-full object-cover border border-border/20"
               />

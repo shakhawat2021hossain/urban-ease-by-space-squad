@@ -11,10 +11,10 @@ interface HistoricalTabProps {
 
 // Mock historical data generator
 const generateHistoricalData = (year: number) => {
-  const baseAirQuality = 75 - (2025 - year) * 0.8; // Decreasing air quality as we go back in time
-  const baseTemperature = 22 + (2025 - year) * 0.1; // Slight temperature increase over time
-  const baseGreenspace = 30 + (2025 - year) * 0.2; // More greenspace in the past
-  const baseWaterQuality = 85 - (2025 - year) * 0.5; // Decreasing water quality over time
+  const baseAirQuality = 75 - (2025 - year) * 0.8;
+  const baseTemperature = 22 + (2025 - year) * 0.1;
+  const baseGreenspace = 30 + (2025 - year) * 0.2;
+  const baseWaterQuality = 85 - (2025 - year) * 0.5;
 
   return {
     airQuality: Math.max(30, Math.min(100, baseAirQuality + Math.random() * 10 - 5)),
@@ -26,10 +26,10 @@ const generateHistoricalData = (year: number) => {
 
 const HistoricalTab = ({ city }: HistoricalTabProps) => {
   const [selectedYear, setSelectedYear] = useState<number>(2025);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [historicalData, setHistoricalData] = useState<any[]>([]);
 
   useEffect(() => {
-    // Generate data points for each 5-year interval
     const years = [];
     for (let year = 2000; year <= 2025; year += 5) {
       years.push({
@@ -49,6 +49,7 @@ const HistoricalTab = ({ city }: HistoricalTabProps) => {
       unit: "AQI",
       color: "text-blue-500",
       trend: currentData.airQuality > 70 ? "Good" : currentData.airQuality > 50 ? "Moderate" : "Poor",
+      link: "https://www.earthdata.nasa.gov/topics/atmosphere/air-quality"
     },
     {
       title: "Average Temperature",
@@ -56,6 +57,7 @@ const HistoricalTab = ({ city }: HistoricalTabProps) => {
       unit: "°C",
       color: "text-red-500",
       trend: currentData.temperature > 25 ? "High" : currentData.temperature > 20 ? "Moderate" : "Low",
+      link: "https://www.earthdata.nasa.gov/topics/atmosphere/air-temperature"
     },
     {
       title: "Green Space Coverage",
@@ -63,6 +65,7 @@ const HistoricalTab = ({ city }: HistoricalTabProps) => {
       unit: "%",
       color: "text-green-500",
       trend: currentData.greenspace > 30 ? "High" : currentData.greenspace > 20 ? "Moderate" : "Low",
+      link: "https://www.earthdata.nasa.gov/topics/land-surface/normalized-difference-vegetation-index-ndvi"
     },
     {
       title: "Water Quality Index",
@@ -70,6 +73,7 @@ const HistoricalTab = ({ city }: HistoricalTabProps) => {
       unit: "WQI",
       color: "text-cyan-500",
       trend: currentData.waterQuality > 80 ? "Good" : currentData.waterQuality > 60 ? "Moderate" : "Poor",
+      link: "https://www.earthdata.nasa.gov/topics/oceans"
     },
   ];
 
@@ -104,7 +108,7 @@ const HistoricalTab = ({ city }: HistoricalTabProps) => {
           </div>
         </Card>
 
-        {/* Current Metrics */}
+        {/* Current Metrics with NASA links */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {metrics.map((metric) => (
             <Card key={metric.title} className="p-4">
@@ -112,7 +116,14 @@ const HistoricalTab = ({ city }: HistoricalTabProps) => {
               <div className={`text-2xl font-bold ${metric.color} mb-1`}>
                 {metric.value} {metric.unit}
               </div>
-              <div className="text-sm text-muted-foreground">Trend: {metric.trend}</div>
+              <a
+                href={metric.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-primary underline"
+              >
+                View NASA Data
+              </a>
             </Card>
           ))}
         </div>

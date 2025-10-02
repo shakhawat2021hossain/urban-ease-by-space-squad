@@ -11,6 +11,7 @@ const issueTypes = ["Air Quality", "Water & Flood", "Greenspace", "Traffic", "Ot
 const SubmitReport = () => {
   const navigate = useNavigate();
   const [city, setCity] = useState("");
+  const [location, setLocation] = useState(""); // New location field
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState(issueTypes[0]);
@@ -18,7 +19,7 @@ const SubmitReport = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!city || !title || !description) {
+    if (!city || !location || !title || !description) {
       alert("Please fill all required fields.");
       return;
     }
@@ -26,6 +27,7 @@ const SubmitReport = () => {
     // Here you can send data to backend API later
     console.log({
       city,
+      location, // Include location
       title,
       description,
       type,
@@ -35,6 +37,7 @@ const SubmitReport = () => {
     setSuccessMessage("Report submitted successfully!");
     // Reset form
     setCity("");
+    setLocation(""); // Reset location
     setTitle("");
     setDescription("");
     setType(issueTypes[0]);
@@ -57,6 +60,16 @@ const SubmitReport = () => {
               placeholder="Enter city name"
               value={city}
               onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+
+          {/* Location Input */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Location</label>
+            <Input
+              placeholder="Enter specific location (e.g., street, neighborhood)"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
           </div>
 

@@ -1,0 +1,1114 @@
+{
+  "name": "NASA",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Problem Submit Form",
+        "formDescription": "Dedicate to solve problem of people and ensure beautiful life",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Problem Title",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Problem Description",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Category ",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Tree/Green"
+                  },
+                  {
+                    "option": "Road/Pothole"
+                  },
+                  {
+                    "option": "Streetlight"
+                  },
+                  {
+                    "option": "Drainage/Water"
+                  },
+                  {
+                    "option": "Solid Waste"
+                  },
+                  {
+                    "option": "Electric/Utility"
+                  },
+                  {
+                    "option": "Safety/Hazard"
+                  },
+                  {
+                    "option": "Noise/Illegal Activity"
+                  },
+                  {
+                    "option": "Other"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Location ",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "How long has the issue existed?",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -2096,
+        304
+      ],
+      "id": "b4e8b2a9-2920-4c68-926d-5b13e5f7422c",
+      "name": "On form submission",
+      "webhookId": "f0577da0-2591-4d15-8389-43a4e2489b07"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5c4c50a3-040a-4c6d-930d-9ff09e5a58a4",
+              "name": "Problem Title",
+              "value": "={{ $json['Problem Title'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a1c34b76-442c-47ba-be76-92b2eccacaca",
+              "name": "Problem Description",
+              "value": "={{ $json['Problem Description'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9bc231a4-d112-4561-9f2b-d3ad6a4bd14c",
+              "name": "Category ",
+              "value": "={{ $json['Category '] }}",
+              "type": "string"
+            },
+            {
+              "id": "312227cf-3240-4801-b10b-17996caa3370",
+              "name": "Location ",
+              "value": "={{ $json['Location '] }}",
+              "type": "string"
+            },
+            {
+              "id": "2cf0b41f-2062-46fe-aa66-1f17f5d65016",
+              "name": "Ward / Zone ",
+              "value": "={{ $json['Ward / Zone '] }}",
+              "type": "string"
+            },
+            {
+              "id": "42e4fb09-e131-498e-806e-d1aeeeb4e099",
+              "name": "How long has the issue existed?",
+              "value": "={{ $json['How long has the issue existed?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "173d7e5c-3e43-4649-8826-9600d7ff1e64",
+              "name": "Your Name",
+              "value": "={{ $json['Your Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "42f408f2-0fa4-4d44-abd1-3b61b2f82cd8",
+              "name": "Email",
+              "value": "={{ $json.Email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1328,
+        304
+      ],
+      "id": "a7683ece-c2f1-476f-a570-a47251adb5af",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an urban issue classifier",
+        "options": {
+          "systemMessage": "=You are an intelligent classification agent for a city municipal authority.\n\nCitizens report urban issues like drainage failure, power outages, sanitation problems, etc.  \nYour task is to classify each issue into exactly one of the following four categories:\n\n1. Urgent – Critical safety, health, or infrastructure issues needing response within 24 hours.  \n   Examples: severe flooding, open electric wires, robbery due to no light, blocked roads.\n\n2. Need Attention Shortly – High-priority issues affecting public hygiene, comfort, or access but not life-threatening.  \n   Examples: drainage failure, overflowing garbage, frequent water outage.\n\n3. Important – Medium-priority problems that affect convenience or sanitation but are manageable for a few days.  \n   Examples: potholes, broken street lights, blocked footpaths.\n\n4. Less Important – Minor or aesthetic issues that do not affect safety or basic services.  \n   Examples: graffiti, faded signs, noise complaints.\n\n---\n\nThink logically using the following criteria:\n- Severity\n- Scope (how many people are affected)\n- Duration (how long it's been reported)\n- Consequence (what will happen if not solved)\n- Type of issue (category context)\n\nDo not explain your reasoning.  \nDo not return anything other than the final category.  \nJust return one of these exact words:  \n**Urgent**, **Need Attention Shortly**, **Important**, or **Less Important**\n\nSpecial Rules:\n- Any electricity or lighting issue is never \"Less Important\".\n- If there is no light and people mention safety risks, robbery, or accidents, classify as \"Urgent\".\n- If there is no light for several days/weeks but no reported crime yet, classify as \"Important\".\n- Cosmetic issues (like faded paint, graffiti) are the only valid cases for \"Less Important\".\nSpecific Rules for Each Category\n🔴 Urgent\n\nAny issue that directly risks human life or safety (fire, electric hazard, gas leak, severe flooding, tree blocking road, open manhole).\n\nAny crime-related context (robbery, assault, harassment, violence).\n\nHealth hazards that can spread quickly (toxic waste, sewage overflowing into houses, drinking water contamination).\n\nInfrastructure collapse (bridge, building, wall, road cave-in).\n\n🟠 Need Attention Shortly\n\nDrainage problems causing severe discomfort (people can’t live properly, foul smell, mosquito breeding).\n\nWater supply cut or severe shortage (but not total emergency yet).\n\nStreetlight outage for more than a week if no crimes yet (safety concern but not urgent).\n\nGarbage overflow for 3+ days → risk of disease but not immediate death risk.\n\nBlocked secondary road/footpath (but main access is still available).\n\n🔵 Important\n\nStreetlight outage for a few days with no direct crime report.\n\nPotholes that make driving uncomfortable but not causing accidents yet.\n\nBroken street signs, blocked drains (slow drainage but not flooding).\n\nGarbage not collected for 1–2 days.\n\nLocalized smell/odour issues.\n\n🟢 Less Important\n\nCosmetic / Aesthetic issues → graffiti, broken benches, cracked paint, faded road markings.\n\nNoise complaints (unless linked to violence or health).\n\nSmall cracks in footpaths or walls that don’t risk collapse.\n\nDecorative lights not working (but street is lit).\n\nRequests for beautification (flowers, painting, decoration).\n\n\n\nNow analyze this issue:\n\nProblem: {{ $json[\"Problem Description\"] }}\nCategory: {{ $json[\"Category\"] || \"General\" }}\nDuration: {{ $json[\"How long has the issue existed?\"] || \"Unknown\" }}\nLocation: {{ $json[\"Location\"] || \"Not Provided\" }}\nWard: {{ $json[\"Ward / Zone\"] || \"Not Provided\" }}\n\n⚠️ You must respond with only the category word — no asterisks, no formatting, no explanation. Just output exactly:\n\nUrgent  \nNeed Attention Shortly  \nImportant  \nLess Important\n\n\n\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -832,
+        304
+      ],
+      "id": "cffe249c-295c-4746-b555-963f25566b2a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1200,
+        608
+      ],
+      "id": "f7ef8247-ff9c-4077-85ee-9fa49eab4a74",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "55JoythAi4KxrKIo",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1680,
+        304
+      ],
+      "id": "4e10b509-5957-4bb3-8d03-5f3da36ab8e8",
+      "name": "Wait",
+      "webhookId": "f181c4f9-266a-4e86-b7ca-c26adc62cb83"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('On form submission').item.json.submittedAt }}",
+        "contextWindowLength": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -944,
+        608
+      ],
+      "id": "0145aa6e-d056-44d9-8903-91f12f9789f2",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "53601ae2-0e8a-4ad9-925f-a953a84b01ae",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "Not Important",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "f5a36e63-eb45-4d1e-9d5f-c841d0ef9cc9",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": " Urgent",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "cb6755d2-1f79-4b6b-acc3-3122f809d6b2",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "Important",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        1008
+      ],
+      "id": "61265a4e-2bb1-4110-b209-3c33179ddf3e",
+      "name": "If",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "Urgent",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "a6caac55-a879-46cf-ad77-af5fc2ffffba"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b37f4975-63f1-4b9b-a0c1-9846c69eea11",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "need attention shortly",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f740d96c-3093-46d3-a157-7abf5437c391",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "Important",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3b84b2d7-cbe2-44c3-97c0-f096007cfde6",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "Less Important",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -352,
+        272
+      ],
+      "id": "85333b18-207b-421e-8984-9ed55037a3c0",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE",
+          "mode": "list",
+          "cachedResultName": "Urgent ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Problem Title": "={{ $('Edit Fields').item.json['Problem Title'] }}",
+            "Problem Description": "={{ $('Edit Fields').item.json['Problem Description'] }}",
+            "Category": "={{ $('Edit Fields').item.json['Category '] }}",
+            "Location": "={{ $('Edit Fields').item.json['Location '] }}",
+            "Ward / Zone": "={{ $('Edit Fields').item.json['Ward / Zone '] }}",
+            "Duration": "={{ $('Edit Fields').item.json['How long has the issue existed?'] }}",
+            "Name": "={{ $('Edit Fields').item.json['Your Name'] }}",
+            "Email": "={{ $('Edit Fields').item.json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Problem Title",
+              "displayName": "Problem Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Problem Description",
+              "displayName": "Problem Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ward / Zone",
+              "displayName": "Ward / Zone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Duration",
+              "displayName": "Duration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        208,
+        -48
+      ],
+      "id": "16f8d634-424d-4405-9df1-cc517dd5e80c",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1zo6jFjNheCyquCo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE",
+          "mode": "list",
+          "cachedResultName": "Urgent ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 493537763,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE/edit#gid=493537763"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Problem Title": "={{ $('Edit Fields').item.json['Problem Title'] }}",
+            "Problem Description": "={{ $('Edit Fields').item.json['Problem Description'] }}",
+            "Category": "={{ $('Edit Fields').item.json['Category '] }}",
+            "Ward / Zone": "={{ $('Edit Fields').item.json['Ward / Zone '] }}",
+            "Location": "={{ $('Edit Fields').item.json['Location '] }}",
+            "Duration": "={{ $('Edit Fields').item.json['How long has the issue existed?'] }}",
+            "Name": "={{ $('Edit Fields').item.json['Your Name'] }}",
+            "Email": "={{ $('Edit Fields').item.json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Problem Title",
+              "displayName": "Problem Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Problem Description",
+              "displayName": "Problem Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ward / Zone",
+              "displayName": "Ward / Zone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Duration",
+              "displayName": "Duration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        208,
+        304
+      ],
+      "id": "b3cb3fda-2089-454a-b652-b85d835ac404",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1zo6jFjNheCyquCo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE",
+          "mode": "list",
+          "cachedResultName": "Urgent ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 179874137,
+          "mode": "list",
+          "cachedResultName": "Sheet3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE/edit#gid=179874137"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Problem Title": "={{ $('Edit Fields').item.json['Problem Title'] }}",
+            "Problem Description": "={{ $('Edit Fields').item.json['Problem Description'] }}",
+            "Category": "={{ $('Edit Fields').item.json['Category '] }}",
+            "Location": "={{ $('Edit Fields').item.json['Location '] }}",
+            "Ward / Zone": "={{ $('Edit Fields').item.json['Ward / Zone '] }}",
+            "Duration": "={{ $('Edit Fields').item.json['How long has the issue existed?'] }}",
+            "Name": "={{ $('Edit Fields').item.json['Your Name'] }}",
+            "Email": "={{ $('Edit Fields').item.json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Problem Title",
+              "displayName": "Problem Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Problem Description",
+              "displayName": "Problem Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ward / Zone",
+              "displayName": "Ward / Zone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Duration",
+              "displayName": "Duration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        208,
+        592
+      ],
+      "id": "3c3e1992-40e5-4b60-a6cb-e995354d620d",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1zo6jFjNheCyquCo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE",
+          "mode": "list",
+          "cachedResultName": "Urgent ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 271692873,
+          "mode": "list",
+          "cachedResultName": "Sheet4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RSXUCncgTlJhJwVvz14jKbNf1QWxpzwgXJCrr3TLgtE/edit#gid=271692873"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Problem Title": "={{ $('Edit Fields').item.json['Problem Title'] }}",
+            "Problem Description": "={{ $('Edit Fields').item.json['Problem Description'] }}",
+            "Category": "={{ $('Edit Fields').item.json['Category '] }}",
+            "Location": "={{ $('Edit Fields').item.json['Location '] }}",
+            "Ward / Zone": "={{ $('Edit Fields').item.json['Ward / Zone '] }}",
+            "Duration": "={{ $('Edit Fields').item.json['How long has the issue existed?'] }}",
+            "Name": "={{ $('Edit Fields').item.json['Your Name'] }}",
+            "Email": "={{ $('Edit Fields').item.json.Email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Problem Title",
+              "displayName": "Problem Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Problem Description",
+              "displayName": "Problem Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ward / Zone",
+              "displayName": "Ward / Zone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Duration",
+              "displayName": "Duration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        224,
+        848
+      ],
+      "id": "8506774d-7661-4477-8f62-7b6d2cc8a872",
+      "name": "Google Sheets3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1zo6jFjNheCyquCo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "ayaan.academics@gmail.com",
+        "subject": "={{ $json.output.subject }}",
+        "message": "={{ $json.output.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1232,
+        -48
+      ],
+      "id": "c5acb1cf-76e9-4627-90c8-2479f44b733e",
+      "name": "Gmail",
+      "webhookId": "7c362632-9b12-45b6-8143-0bb4a2a430aa",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "53HSXoCAuALlo3YX",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "you are an email writer",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You are an assistant for a city municipal authority. \nWhen an issue is classified as \"Urgent\", your task is to draft a clear and professional Gmail message to the Mayor. \nuse this information to write the draft: \n{{ $json['Problem Title'] }}\n{{ $json['Problem Description'] }}\n{{ $json.Category }}\n{{ $json.Category }}\n{{ $json.Location }}\n{{ $json['Ward / Zone'] }}\n{{ $json.Duration }}\n\nRules for the Gmail draft:\n- Subject line must start with: \"🚨 URGENT ISSUE REPORTED – <Category>\"\n- Body should include:\n  1. Problem description in clear words.\n  2. Location and Ward/Zone.\n  3. How long the issue has existed.\n  4. Why this issue is urgent (safety, crime, health, or infrastructure).\n  5. A call to immediate action.\n\n- Write in a formal and respectful tone.\n- Keep the message concise, maximum 150 words.\n- Do not return explanations, just return the Gmail subject and body.\n\nOutput format:\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        720,
+        -48
+      ],
+      "id": "6542c10a-0e30-41cb-b5b0-39fcbd21f18a",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        720,
+        336
+      ],
+      "id": "734ddccc-3906-4895-a049-97df73fc3436",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "55JoythAi4KxrKIo",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"subject\": \"🚨 URGENT ISSUE REPORTED – Electricity/Lighting\",\n  \"body\": \"Dear Mayor,\\n\\nAn urgent issue has been reported in Ward 7, Central Road. The street has had no lighting for over 2 months, and multiple robberies have already occurred at night. Residents feel unsafe and avoid going out after dark.\\n\\nThis situation poses a serious threat to public safety and must be addressed immediately.\\n\\nWe request your immediate intervention to resolve this matter without delay.\\n\\nSincerely,\\nUrban Issue AI Agent\"\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1168,
+        304
+      ],
+      "id": "383bb51c-3ade-41bf-bdd6-d725ba43d1b4",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6c60e7b6-0b16-4805-9335-4337924d04f6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1f9e64001a64fa45e178ca13b4c38a5df248668c95b24f45f5db13900cd9330f"
+  },
+  "id": "uKgahhlGkmJ0yFTK",
+  "tags": []
+}

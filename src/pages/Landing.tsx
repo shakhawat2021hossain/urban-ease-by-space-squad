@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 import CitySearch from "@/components/CitySearch";
 import HierarchicalCitySearch from "@/components/HierarchicalCitySearch";
 import { Button } from "@/components/ui/button";
-import { MapPin, Leaf, Droplets, Wind, ThermometerSun, Search, Globe } from "lucide-react";
+import { Leaf, Droplets, Wind, ThermometerSun, Search, Globe } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Logo from "../assets/logo-min.png"
 
 export interface CityData {
   id: number;
@@ -25,6 +26,7 @@ const issueTypes = ["Air Quality", "Water & Flood", "Greenspace", "Traffic", "Ot
 const Landing = () => {
   const [selectedCity, setSelectedCity] = useState<CityData | null>(null);
   const [city, setCity] = useState("");
+  const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState(issueTypes[0]);
@@ -50,6 +52,7 @@ const Landing = () => {
     console.log({ city, title, type, description, date: new Date().toISOString() });
     setSuccessMessage("Report submitted successfully!");
     setCity("");
+    setLocation("");
     setTitle("");
     setDescription("");
     setType(issueTypes[0]);
@@ -64,35 +67,32 @@ const Landing = () => {
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-background via-background to-primary/5 overflow-hidden">
-      {/* Header / Hero Section */}
+      {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-16">
-        {/* Logo */}
-        <div className="absolute top-4 left-4">
-          <img src="/assets/logo-min.png" alt="Logo" className="w-16 h-16" />
-        </div>
-
+        
+        {/* Logo instead of MapPin icon */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center w-full max-w-3xl"
         >
-          <div className="flex items-center justify-center mb-4">
-            <div className="gradient-earth p-4 rounded-2xl shadow-[var(--shadow-elevated)] animate-float">
-              <MapPin className="w-12 h-12 text-white" />
+          <div className="flex items-center justify-center my-6">
+            <div className="rounded-2xl shadow-[var(--shadow-elevated)] animate-float">
+              <img src={Logo} alt="Urban Ease Logo" className="h-24" />
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+          {/* <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
             Urban Ease
-          </h1>
+          </h1> */}
 
-          <p className="text-lg md:text-xl text-muted-foreground mb-4">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Explore environmental data and urban insights for cities worldwide
           </p>
 
-          {/* Buttons */}
-          <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
+          {/* Buttons for Reports */}
+          <div className="flex flex-col md:flex-row justify-center gap-4 mb-8">
             <Button onClick={handleReportsNavigate}>View Community Reports</Button>
 
             <Dialog>
@@ -106,7 +106,7 @@ const Landing = () => {
                 </DialogDescription>
                 <form onSubmit={handleSubmitReport} className="flex flex-col gap-4">
                   <Input placeholder="City Name" value={city} onChange={(e) => setCity(e.target.value)} required />
-                  <Input placeholder="Location" value={city} onChange={(e) => setCity(e.target.value)} required />
+                  <Input placeholder="Location" value={city} onChange={(e) => setLocation(e.target.value)} required />
                   <Input placeholder="Issue Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
                   <Select value={type} onValueChange={setType}>
                     <SelectTrigger>
@@ -120,7 +120,13 @@ const Landing = () => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <Textarea placeholder="Describe the issue in detail" value={description} onChange={(e) => setDescription(e.target.value)} rows={5} required />
+                  <Textarea
+                    placeholder="Describe the issue in detail"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={5}
+                    required
+                  />
                   <div className="flex gap-2 justify-end mt-2">
                     <DialogClose asChild>
                       <Button variant="secondary">Cancel</Button>
@@ -133,39 +139,62 @@ const Landing = () => {
             </Dialog>
           </div>
 
-          {/* Search Tabs */}
-          <motion.div className="w-full mt-4">
+          {/* Search Components */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="max-w-2xl mx-auto mb-6"
+          >
             <Tabs defaultValue="quick" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-2">
-                <TabsTrigger value="quick" className="flex items-center gap-2"><Search className="w-4 h-4" />Quick Search</TabsTrigger>
-                <TabsTrigger value="browse" className="flex items-center gap-2"><Globe className="w-4 h-4" />Browse by Region</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 mb-4">
+                <TabsTrigger value="quick" className="flex items-center gap-2">
+                  <Search className="w-4 h-4" />
+                  Quick Search
+                </TabsTrigger>
+                <TabsTrigger value="browse" className="flex items-center gap-2">
+                  <Globe className="w-4 h-4" />
+                  Browse by Region
+                </TabsTrigger>
               </TabsList>
-              <TabsContent value="quick" className="glass-card p-4 max-h-[30vh] overflow-auto">
+
+              <TabsContent value="quick" className="glass-card p-6 relative z-50">
                 <CitySearch onCitySelect={handleCitySelect} />
               </TabsContent>
-              <TabsContent value="browse" className="glass-card p-4 max-h-[30vh] overflow-auto">
+              <TabsContent value="browse" className="glass-card p-6 relative z-50">
                 <HierarchicalCitySearch onCitySelect={handleCitySelect} />
               </TabsContent>
             </Tabs>
           </motion.div>
         </motion.div>
 
-        {/* Features */}
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 w-full max-w-6xl">
-          {features.map((feature) => (
-            <div key={feature.title} className="glass-card p-4 hover:shadow-[var(--shadow-elevated)] transition-all duration-300 hover:scale-105">
-              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-2">
+        {/* Features Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
+        >
+          {features.map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
+              className="glass-card p-6 hover:shadow-[var(--shadow-elevated)] transition-all duration-300 hover:scale-105"
+            >
+              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <feature.icon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold text-lg mb-1">{feature.title}</h3>
+              <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
               <p className="text-sm text-muted-foreground">{feature.description}</p>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-background/80 py-2 text-center border-t border-muted-foreground/20">
+      <footer className="bg-background/80 py-4 mt-auto text-center border-t border-muted-foreground/20">
         <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} Urban Ease | Powered by NASA Data
         </p>
