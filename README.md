@@ -108,8 +108,20 @@ bun run dev
 
 ---
 
-##📌 Future Improvements
-- 🔐 Authentication for report submission
-- 🗺️ Interactive Map view for reports (Leaflet/Mapbox)
-- 📊 More climate & urban planning metrics
-- ☁️ Backend integration with MongoDB/Postgres
+## 📌 Future Improvements  
+
+- 🔐 **Authentication for report submission**  
+- 🗺️ **Interactive Map view for reports** (Leaflet/Mapbox)  
+- 📊 **More climate & urban planning metrics**  
+- ☁️ **Backend integration with MongoDB/Postgres**  
+
+---
+
+## ❤️ Acknowledgements  
+
+- 🌍 [NASA Earth Data](https://earthdata.nasa.gov/)  
+- 🌤️ [Open-Meteo](https://open-meteo.com/)  
+- 🗺️ [OpenStreetMap / Nominatim](https://nominatim.openstreetmap.org/)  
+- 📊 [Recharts](https://recharts.org/)  
+- 🎨 [Shadcn/UI](https://ui.shadcn.com/)  
+
