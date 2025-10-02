@@ -106,6 +106,8 @@ bun install
 bun run dev
 ```
 
+---
+
 ##📌 Future Improvements
 - 🔐 Authentication for report submission
 - 🗺️ Interactive Map view for reports (Leaflet/Mapbox)
