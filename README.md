@@ -50,3 +50,12 @@ urban-ease/
 │── public/              # Static assets (logo, images)
 │── package.json         # Dependencies
 │── README.md            # Project documentation
+
+```
+----
+
+## Community n8n Work Flow
+
+<img width="1639" height="547" alt="Screenshot 2025-10-01 191605" src="https://github.com/user-attachments/assets/29bd47e1-e31b-4dfd-8010-b87c0116c27b" />
+
+
