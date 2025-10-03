@@ -119,12 +119,6 @@ urban-ease/
 
 ---
 
-## Overview
-### Landing page
-<img width="1639" height="547" alt="Screenshot 2025-10-01 191605" src="https://drive.google.com/file/d/1MZCmxlYrT-nLKue44gJdXzuXluMNaGS4/view" />
-
----
-
 ## 👩‍🚀 Team – Space Squad
 
 - A.M. Saadnan Tahsin (Team Lead)
